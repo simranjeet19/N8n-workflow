@@ -1,0 +1,761 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {}
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -160,
+        -112
+      ],
+      "id": "",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "actorId": {
+          "__rl": true,
+          "value": "MXLpngmVpE8WTESQr",
+          "mode": "list",
+          "cachedResultName": "🚀 Indeed jobs scraper [PPR] (borderline/indeed-scraper)",
+          "cachedResultUrl": "https://console.apify.com/actors//input"
+        },
+        "customBody": "{\n    \"country\": \"de\",\n    \"enableUniqueJobs\": false,\n    \"includeSimilarJobs\": false,\n    \"maxRows\": 10,\n    \"fromDays\": \"14\",\n    \"query\": \"DevOps Engineer\"\n}",
+        "timeout": 60
+      },
+      "type": "@apify/n8n-nodes-apify.apify",
+      "typeVersion": 1,
+      "position": [
+        0,
+        -112
+      ],
+      "id": "ad78426c-8b15-40ac-8ed871ba",
+      "name": "Run an Actor",
+      "credentials": {
+        "apifyApi": {
+          "id": "",
+          "name": "Apify account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "Datasets",
+        "datasetId": "={{ $json.defaultDatasetId }}",
+        "offset": "=",
+        "options": {}
+      },
+      "type": "@apify/n8n-nodes-apify.apify",
+      "typeVersion": 1,
+      "position": [
+        176,
+        -112
+      ],
+      "id": "825d88a0-7e1c-435d-a861b",
+      "name": "Get dataset items",
+      "credentials": {
+        "apifyApi": {
+          "id": "",
+          "name": "Apify account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "maxItems": 2
+      },
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        320,
+        -112
+      ],
+      "id": "",
+      "name": "Limit"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d//edit?gid=0#gid=0",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Joblist",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [
+            "Fit Score"
+          ],
+          "schema": [
+            {
+              "id": "Title",
+              "displayName": "Title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Company",
+              "displayName": "Company",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Location",
+              "displayName": "Location",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Job Type",
+              "displayName": "Job Type",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Platform",
+              "displayName": "Platform",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Link",
+              "displayName": "Link",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Date",
+              "displayName": "Date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Fit Score",
+              "displayName": "Fit Score",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Recommendation",
+              "displayName": "Recommendation",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Category",
+              "displayName": "Category",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Matched Skills",
+              "displayName": "Matched Skills",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Red Flags",
+              "displayName": "Red Flags",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "German Requirement",
+              "displayName": "German Requirement",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Years Required",
+              "displayName": "Years Required",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Cover Letter",
+              "displayName": "Cover Letter",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Notes",
+              "displayName": "Notes",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "ageDays",
+              "displayName": "ageDays",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "isTooOld",
+              "displayName": "isTooOld",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "fitExplanation",
+              "displayName": "fitExplanation",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "cleanedJobTextPreview",
+              "displayName": "cleanedJobTextPreview",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "CV Doc Link",
+              "displayName": "CV Doc Link",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Cover Letter Doc Link",
+              "displayName": "Cover Letter Doc Link",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {
+          "handlingExtraData": "insertInNewColumn"
+        }
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2480,
+        -160
+      ],
+      "id": "",
+      "name": "Append or update row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "models/gemini-3-flash-preview"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "experience, companies, dates, education, certifications, or language levels.\n- Do not use placeholders like [Your Name], [Company], [Position], or \"your company\".\n- End exactly with:\nSincerely,\nSimranjeet Kaur"
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1.2,
+      "position": [
+        1296,
+        -176
+      ],
+      "id": "1",
+      "name": "Message a model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "documentURL": "https://docs.google.com/document/d//edit?tab=t.0"
+      },
+      "type": "n8n-nodes-base.googleDocs",
+      "typeVersion": 2,
+      "position": [
+        912,
+        -176
+      ],
+      "id": "",
+      "name": "Get Original CV",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "",
+          "name": "Google Docs account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "copy",
+        "fileId": {
+          "__rl": true,
+          "value": "https://docs.google.com/document/d//edit?tab=t.0",
+          "mode": "url"
+        },
+        "name": "={{ $node[\"Prepare Job Data\"].json.cvFileName }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1104,
+        -176
+      ],
+      "id": "",
+      "name": "Copy CV Template",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "return items.map((item) => {\n  let raw =\n    item.json.content?.parts?.[0]?.text ??\n    item.json.text ??\n    item.json.output ??\n    item.json.response ??\n    \"\";\n\n  if (!raw) {\n    throw new Error(\"No Gemini text found.\");\n  }\n\n  raw = String(raw)\n    .replace(/```json/gi, \"\")\n    .replace(/```/g, \"\")\n    .trim();\n\n  let parsed;\n\n  try {\n    parsed = JSON.parse(raw);\n  } catch (error) {\n    throw new Error(\"Gemini output is not valid JSON. Raw output: \" + raw);\n  }\n\n  const jobData = $node[\"Prepare Job Data\"].json;\n  const copiedCv = $node[\"Copy CV Template\"].json;\n\n  return {\n    json: {\n      ...jobData,\n\n      sapExperience: parsed.sapExperience || \"\",\n      glsExperience: parsed.glsExperience || \"\",\n      coverLetter: parsed.coverLetter || \"\",\n\n      cvDocumentId: copiedCv.id,\n      cvDocumentName: copiedCv.name,\n      cvDocLink: `https://docs.google.com/document/d/${copiedCv.id}/edit`\n    }\n  };\n});"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1600,
+        -176
+      ],
+      "id": "",
+      "name": "Parse Gemini CV Sections"
+    },
+    {
+      "parameters": {
+        "jsCode": "return items.map((item) => {\n  const job = item.json;\n\n  const title = job.title || \"Unknown Role\";\n\n  const company =\n    job.company ||\n    job.companyName ||\n    job.employerName ||\n    job.source ||\n    \"Unknown Company\";\n\n  const location =\n    job.location?.formattedAddressShort ||\n    job.location?.formattedAddressLong ||\n    job.location?.city ||\n    job.location ||\n    \"\";\n\n  const jobUrl = job.jobUrl || job.url || job.link || \"\";\n\n  const description =\n    job.descriptionText ||\n    job.description ||\n    job.descriptionHtml ||\n    \"\";\n\n  const jobType = Array.isArray(job.jobType)\n    ? job.jobType.join(\", \")\n    : job.jobType || \"\";\n\n  const safeCompany = company\n    .replace(/[^a-zA-Z0-9]/g, \"\")\n    .slice(0, 35);\n\n  const safeTitle = title\n    .replace(/[^a-zA-Z0-9]/g, \"\")\n    .slice(0, 45);\n\n  return {\n    json: {\n      ...job,\n\n      title,\n      company,\n      location,\n      jobType,\n      jobUrl,\n      description,\n\n      safeCompany,\n      safeTitle,\n\n      cvFileName: `SimranjeetCV_${safeCompany}_${safeTitle}`,\n      coverLetterFileName: `SimranjeetCoverLetter_${safeCompany}_${safeTitle}`,\n\n      cvDocLink: \"\",\n      coverLetterDocLink: \"\",\n      status: \"Generated\",\n      notes: \"\"\n    }\n  };\n});"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        736,
+        -176
+      ],
+      "id": "",
+      "name": "Prepare Job Data"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://docs.googleapis.com/v1/documents/{{$node[\"Parse Gemini CV Sections\"].json.cvDocumentId}}:batchUpdate",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleDocsOAuth2Api",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "requests",
+              "value": "={{\n[\n  {\n    replaceAllText: {\n      containsText: {\n        text: '[[SAP_EXPERIENCE]]',\n        matchCase: true\n      },\n      replaceText: $json.sapExperience\n    }\n  },\n  {\n    replaceAllText: {\n      containsText: {\n        text: '[[GLS_EXPERIENCE]]',\n        matchCase: true\n      },\n      replaceText: $json.glsExperience\n    }\n  }\n]\n}}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        1792,
+        -176
+      ],
+      "id": "",
+      "name": "CV HTTP Request",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "",
+          "name": "Google Docs account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "copy",
+        "fileId": {
+          "__rl": true,
+          "value": "https://docs.google.com/document/d//edit?tab=t.0",
+          "mode": "url"
+        },
+        "name": "={{ $node[\"Prepare Job Data\"].json.coverLetterFileName }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1968,
+        -176
+      ],
+      "id": "",
+      "name": "Copy Cover Letter Template",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://docs.googleapis.com/v1/documents/{{$node[\"Copy Cover Letter Template\"].json.id}}:batchUpdate",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleDocsOAuth2Api",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "requests",
+              "value": "={{\n[\n  {\n    replaceAllText: {\n      containsText: {\n        text: '[[COVER_LETTER]]',\n        matchCase: true\n      },\n      replaceText: $node[\"Parse Gemini CV Sections\"].json.coverLetter\n    }\n  }\n]\n}}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        2144,
+        -176
+      ],
+      "id": "",
+      "name": "Replace Cover Letter Placeholder",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "",
+          "name": "Google Docs account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const job = $node[\"Parse Gemini CV Sections\"].json;\n\nconst cvDocumentId = job.cvDocumentId;\nconst coverLetterDocumentId = $node[\"Copy Cover Letter Template\"].json.id;\n\nreturn [\n  {\n    json: {\n      Title: job.title,\n      Company: job.company,\n      Location: job.location,\n      \"Job Type\": job.jobType,\n      Platform: \"Indeed\",\n      Link: job.jobUrl,\n\n      \"CV Doc Link\": `https://docs.google.com/document/d/${cvDocumentId}/edit`,\n      \"Cover Letter Doc Link\": `https://docs.google.com/document/d/${coverLetterDocumentId}/edit`,\n\n      Date: new Date().toISOString().slice(0, 10),\n\n      \"Fit Score\": \"\",\n      Recommendation: \"\",\n      Category: \"\",\n      \"Matched Skills\": Array.isArray(job.attributes) ? job.attributes.join(\", \") : \"\",\n      \"Red Flags\": \"\",\n      \"German Requirement\": job.language === \"de\" ? \"German job post\" : \"\",\n      \"Years Required\": \"\",\n\n      \"Cover Letter\": job.coverLetter,\n      Status: \"Generated\",\n      Notes: \"\",\n\n      ageDays: job.age || \"\",\n      isTooOld: \"\",\n      fitExplanation: \"\",\n      cleanedJobTextPreview: job.description ? job.description.slice(0, 500) : \"\"\n    }\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2336,
+        -176
+      ],
+      "id": "",
+      "name": "Prepare Sheet Row"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        512,
+        -112
+      ],
+      "id": "",
+      "name": "Loop Over Items"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Run an Actor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Run an Actor": {
+      "main": [
+        [
+          {
+            "node": "Get dataset items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get dataset items": {
+      "main": [
+        [
+          {
+            "node": "Limit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model": {
+      "main": [
+        [
+          {
+            "node": "Parse Gemini CV Sections",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Original CV": {
+      "main": [
+        [
+          {
+            "node": "Copy CV Template",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Copy CV Template": {
+      "main": [
+        [
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse Gemini CV Sections": {
+      "main": [
+        [
+          {
+            "node": "CV HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Job Data": {
+      "main": [
+        [
+          {
+            "node": "Get Original CV",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CV HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Copy Cover Letter Template",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Copy Cover Letter Template": {
+      "main": [
+        [
+          {
+            "node": "Replace Cover Letter Placeholder",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Replace Cover Letter Placeholder": {
+      "main": [
+        [
+          {
+            "node": "Prepare Sheet Row",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Sheet Row": {
+      "main": [
+        [
+          {
+            "node": "Append or update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Prepare Job Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append or update row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "timeSavedMode": "fixed",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  },
+  "versionId": "",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": ""
+  },
+  "id": "",
+  "tags": []
+}
